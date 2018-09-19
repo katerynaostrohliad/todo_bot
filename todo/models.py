@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+from django.db.models.functions import datetime
 
 
 class User(models.Model):
@@ -10,4 +9,6 @@ class User(models.Model):
 
 class Todo(models.Model):
     tasks = models.CharField(max_length=70)
+    period = models.IntegerField()
+    time_of_accomplishing = models.DateTimeField(default=datetime.datetime.today())
     reporter = models.ForeignKey(User, on_delete=models.CASCADE)

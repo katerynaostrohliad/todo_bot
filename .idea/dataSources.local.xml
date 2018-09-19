@@ -8,7 +8,9 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>kate</user-name>
+      <introspection-schemas>todo:public</introspection-schemas>
       <resolve-scope>todo:kate,public</resolve-scope>
+      <unqualified-resolve-schemas>todo:kate,public</unqualified-resolve-schemas>
     </data-source>
   </component>
 </project>

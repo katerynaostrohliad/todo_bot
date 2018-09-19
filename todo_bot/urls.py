@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from todo.views import Welcome
+from todo.views import Welcome, TodoView, UserView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^welcome/', Welcome.as_view())
+    url(r'^welcome/', Welcome.as_view()),
+    url(r'^todo/', TodoView.as_view()),
+    url('r^user/', UserView.as_view())
 ]

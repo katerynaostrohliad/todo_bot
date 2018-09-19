@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.db import IntegrityError
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import User, Todo
 from .serializers import UserSerializer, TodoSerializer
-from todo.database.todo import insert_todo, delete_todo, get_one_todo, get_task_with_user
+from todo.database.todo import insert_todo, delete_todo, get_one_todo, get_task_with_user, check_time
 from todo.database.user import add_user, delete_user, get_user
 
 
@@ -27,6 +28,7 @@ class Welcome(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 #/UserView
 class UserView(APIView):
@@ -53,6 +55,7 @@ class UserView(APIView):
         except User.DoesNotExist:
             return None
         return user
+
 
 #/TodoView
 class TodoView(APIView):
@@ -86,6 +89,18 @@ class TodoView(APIView):
             # return none or bad request
         return task
 
+    def check_period(self, request):
+        period = request.data
+        if period > 3:
+            return Response("It's a big task, don't you want to split it into several stages?", status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return None
 
+    def check_time(self, request):
+        time_of_accomplishing = request.data
+        try:
+            check_time(time_of_accomplishing)
+        except ValidationError:
+            return Response("Enter valid date and time", status=status.HTTP_400_BAD_REQUEST)
 
 

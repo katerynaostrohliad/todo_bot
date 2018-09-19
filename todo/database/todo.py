@@ -5,6 +5,8 @@ from todo.serializers import TodoSerializer
 def insert_todo(payload, user):
     new_todo = Todo(
         tasks=payload["tasks"],
+        period=payload['time_for_accomplishing'],
+        time_of_accomplishing=payload['time_of_accomplishing'],
         reporter=user,
     )
     new_todo.save()
@@ -35,3 +37,11 @@ def get_one_todo(task_id):
         return None
     serialized = TodoSerializer(task_id)
     return serialized.data
+
+
+def check_time(time_of_accomplishing):
+    if time_of_accomplishing.is_valid:
+        return "Success"
+
+
+
