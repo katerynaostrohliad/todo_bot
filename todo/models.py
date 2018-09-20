@@ -13,3 +13,5 @@ class Todo(models.Model):
     time_of_accomplishing = models.DateTimeField(default=datetime.datetime.today())
     reporter = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
+
